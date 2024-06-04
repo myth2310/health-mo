@@ -41,17 +41,21 @@ class DashboardController extends Controller
             ->orderBy('health.created_at', 'desc')
             ->first();
 
-            
-        return view('dashboard.dashboard', compact('page', 'totalUser', 'totalUsertTeraktivasi', 'data', 'umur', 'health'));
-    }
+        $datausers = DB::table('users')
+            ->select(DB::raw('COUNT(*) as count, DATE_FORMAT(created_at, "%Y-%m-01") as month'))
+            ->where('level','User')
+            ->groupBy('month')
+            ->orderBy('month', 'asc')
+            ->get();
 
-    public function getUsersPerMonthData()
-    {
-        $usersPerMonth = User::select(DB::raw('MONTH(created_at) as month'), DB::raw('COUNT(*) as total'))
-                        ->groupBy(DB::raw('MONTH(created_at)'))
-                        ->get();
+        $labels = $datausers->pluck('month')->map(function ($date) {
+            return Carbon::parse($date)->format('M Y');
+        });
+        $jumlah = $datausers->pluck('count');
 
-        return response()->json($usersPerMonth);
+
+
+        return view('dashboard.dashboard', compact('page', 'totalUser', 'totalUsertTeraktivasi', 'data', 'umur', 'health', 'labels', 'jumlah'));
     }
 
 
@@ -69,7 +73,7 @@ class DashboardController extends Controller
 
         if ($request->hasFile('foto')) {
             if ($user->foto) {
-                Storage::delete('public' . $user->foto);
+                Storage::delete('public/profile_photos' . $user->foto);
             }
             $path = $request->file('foto')->store('profile_photos', 'public');
             $user->foto = $path;

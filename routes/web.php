@@ -21,10 +21,8 @@ Route::get('/logout', [AuthController::class, 'logout']);
 
 Route::group(['middleware' => ['auth', 'ceklevel:Admin,User']], function () {
     // Dashboard
-    Route::get('/', [DashboardController::class, 'index']);
-    Route::post('/profile/update', [DashboardController::class, 'update'])->name('profile.update');
-    Route::get('/users-per-month', [DashboardController::class, 'getUsersPerMonthData']);
-   
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/profile/update', [DashboardController::class, 'update'])->name('profile.update');   
 });
 Route::group(['middleware' => ['auth', 'ceklevel:Admin']], function () {
     Route::get('/user', [UserController::class, 'index']);
@@ -36,6 +34,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:Admin']], function () {
 Route::group(['middleware' => ['auth', 'ceklevel:User']], function () {
     Route::get('/history-checking', [HistoryController::class, 'history'])->name('user.history');
     Route::get('/checking', [CheckingController::class, 'index']);
+    Route::get('/hasil-rekomendasi', [CheckingController::class, 'rekomendasi']);
     Route::get('/health/data', [CheckingController::class, 'getHealthData']);
     Route::post('/health/store', [CheckingController::class, 'storeHealthData']);
 

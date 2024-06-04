@@ -19,4 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::post('/health/store', [CheckingController::class, 'storeHealthData']);
+Route::post('/health/store/coba', [CheckingController::class, 'storeHealthData1']);
 

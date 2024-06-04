@@ -43,7 +43,7 @@
                                 </h3>
                                 <p class="text-secondary text-sm font-weight-normal">{{$umur}} Tahun</p>
                             </div>
-                            <a href="/checking" class="btn btn-warning"><i class="fa-solid fa-heart-pulse" style="color: #ffffff; margin-right: 8px;"></i>Checking Health</a>
+                            <button class="btn btn-warning checking"><i class="fa-solid fa-heart-pulse" style="color: #ffffff; margin-right: 8px;"></i>Checking Health</button>
                         </div>
                     </div>
                 </div>
@@ -221,7 +221,7 @@
             <div class="card-header pb-0 mb-4">
                 <div class="d-sm-flex align-items-center mb-3">
                     <div>
-                        <h6 class="font-weight-bold text-lg mb-0">Jumlah Pengguna</h6>
+                        <h6 class="font-weight-bold text-lg mb-0">Jumlah Pengguna / Bulan</h6>
                         <p class="text-sm mb-sm-0 mb-2">Here you have details about the balance.</p>
                     </div>
                 </div>
@@ -229,7 +229,7 @@
             <div class="card-body p-3 mt-4">
                 <div class="chart mt-n6">
                     <div>
-                        <div id="chartdiv"></div>
+                        <canvas id="myChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -247,7 +247,58 @@
     }
 </style>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
 
+<script>
+    $(document).ready(function() {
+        $('.checking').click(function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: 'Mulai Pemeriksaan',
+                text: "Catatan: Pastikan sistem terhubung dengan alat.",
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: 'green',
+                cancelButtonColor: 'red',
+                confirmButtonText: 'Mulai Pemeriksaan',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = "/checking";
+                }
+            });
+        });
+    });
+</script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart').getContext('2d');
+
+    const labels = @json($labels);
+    const data = @json($jumlah);
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Total Users',
+                data: data,
+                borderWidth: 1,
+                backgroundColor: 'rgba(0, 0, 0, 0.2)'
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
 
 @endsection

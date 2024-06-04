@@ -43,7 +43,11 @@ class UserController extends Controller
         }
     }
     
-    public function hapus(){
-        
+    public function hapus($encryptedUserId){
+        $userId = decrypt($encryptedUserId);
+        $user = User::findOrFail($userId);
+        $user->delete();
+        toast('Akun berhasil dihapus', 'success');
+        return redirect()->back();
     }
 }
