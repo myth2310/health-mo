@@ -43,7 +43,7 @@
                                 </h3>
                                 <p class="text-secondary text-sm font-weight-normal">{{$umur}} Tahun</p>
                             </div>
-                            <button class="btn btn-warning checking"><i class="fa-solid fa-heart-pulse" style="color: #ffffff; margin-right: 8px;"></i>Checking Health</button>
+                            <!-- <button class="btn btn-warning checking"><i class="fa-solid fa-heart-pulse" style="color: #ffffff; margin-right: 8px;"></i>Checking Health</button> -->
                         </div>
                     </div>
                 </div>
@@ -63,9 +63,7 @@
                             <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pb-1 text-sm"><span class="text-secondary"></span> &nbsp;
                                 @if (
                                 ($umur >= 6 && $umur <= 10 && $health->bpm >= 70 && $health->bpm <= 110) || ($umur>= 11 && $umur <= 14 && $health->bpm >= 60 && $health->bpm <= 105) || ($umur>= 15 && $umur <= 19 && $health->bpm >= 60 && $health->bpm <= 100) || ($umur>= 20 && $umur <= 35 && $health->bpm >= 95 && $health->bpm <= 170) || ($umur>= 36 && $umur <= 50 && $health->bpm >= 85 && $health->bpm <= 155) || ($umur>= 51 && $health->bpm >= 80 && $health->bpm <= 130) ) <span class="badge text-bg-success text-white p-2" style="font-size: 10px;">Hasil Normal</span>
-                                                                            @else
-                                                                            <span class="badge text-bg-danger text-white p-2" style="font-size: 10px;">Hasil Tidak Normal</span>
-                                                                            @endif
+                                                                            @else                                                                         <span class="badge text-bg-danger text-white p-2" style="font-size: 10px;">Hasil Tidak Normal</span>                                                                 @endif
                             </li>
                         </ul>
                         @else

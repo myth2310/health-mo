@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Health;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,5 +29,30 @@ class HistoryController extends Controller
             ->get();
 
         return view('dashboard.history-checking', compact('page','data'));
+    }
+
+    public function searchUser(Request $request)
+    {
+        $query = $request->input('query');
+        $users = User::where('nama', 'LIKE', "%{$query}%")->get(['user_id', 'nama']);
+        
+        $output = '';
+        if ($users->count() > 0) {
+            foreach ($users as $user) {
+                $output .= '<a href="#" class="list-group-item list-group-item-action" data-id="' . $user->user_id . '">' . $user->nama . '</a>';
+            }
+        } else {
+            $output .= '<p class="list-group-item">No results found</p>';
+        }
+
+        return response($output);
+    }
+
+    public function getUserDetails(Request $request)
+    {
+        $user_id = $request->input('user_id');
+        $user = User::find($user_id, ['no_hp', 'tgl_lahir']);
+
+        return response()->json($user);
     }
 }

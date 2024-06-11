@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('health', function (Blueprint $table) {
             $table->id('health_id');
             $table->integer('user_id');
-            $table->string('bpm');
-            $table->string('oksigen');
+            $table->string('bpm')->nullable();
+            $table->string('oksigen')->nullable();
             $table->timestamps();
         });
     }

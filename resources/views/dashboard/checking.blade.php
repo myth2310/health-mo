@@ -4,6 +4,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+@php
+    $userId = request()->query('user_id');
+@endphp
+
+<form action="">
+    <input type="text" value="{{$userId}}">
+    <input type="text" class="heartRateValue" >
+    <input type="text"  class="oxygenValue">
+</form>
 <div class="row">
     <div class="col-md-6">
         <div class="card">
@@ -43,6 +52,9 @@
     </div>
 </div>
 
+<script>
+    
+</script>
 <script>
     $(document).ready(function() {
         function fetchDataAndUpdateChart() {
