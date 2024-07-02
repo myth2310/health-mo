@@ -24,7 +24,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Tanggal Checking</th>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Nilai BMI</th>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Nilai BPM</th>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Oksigen</th>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Hasil</th>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2"></th>
@@ -34,7 +34,7 @@
                                 @foreach($data as $data)
                                 <tr>
                                     <td>
-                                        <span class="text-sm">{{ Carbon\Carbon::parse($data->create_at)->isoFormat('DD MMMM YYYY') }}</span>
+                                        <span class="text-sm">{{ Carbon\Carbon::parse($data->created_at)->isoFormat('DD MMMM YYYY') }}</span>
                                     </td>
                                     <td>
                                         <span class="text-sm">{{$data->bpm}} BPM</span>

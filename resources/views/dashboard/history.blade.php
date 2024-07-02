@@ -19,7 +19,7 @@
                     </div>
                     <div class="ms-auto d-flex">
                         <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            User Checking Health
+                        <i class="fa-solid fa-heart-pulse" style="margin-right: 10px;"></i>Mulai Checking Kesehatan
                         </button>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                                 <tr>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Nama</th>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Tanggal Checking</th>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Nilai BMI</th>
+                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Nilai BPM</th>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Oksigen</th>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Hasil</th>
                                     <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2"></th>
@@ -61,6 +61,8 @@
                                         <button class="btn-sm btn-success text-white" data-bs-toggle="modal" data-bs-target="#ModalProfil{{$data->health_id}}">
                                             <i class="fa-solid fa-clipboard" style="color: #ffffff; margin-right: 8px;"></i>Hasil Rekomendasi
                                         </button>
+                                        <a data-id="{{ encrypt($data->health_id) }}" data-nama="{{$data->nama}}" class="btn-sm btn-danger p-2 delete"><i class="fa-solid fa-trash" style="color: #ffffff;"></i></a>
+
                                     </td>
                                 </tr>
 
@@ -132,13 +134,13 @@
                         </div>
                         <div class="mb-3">
                             <label for="no_hp" class="form-label">No HP</label>
-                            <input type="text" class="form-control" id="no_hp" name="no_hp" readonly>
+                            <input type="text" class="form-control" id="no_hp" name="no_hp" readonly require>
                         </div>
                         <div class="mb-3">
                             <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                            <input type="text" class="form-control" id="tgl_lahir" name="tgl_lahir" readonly>
+                            <input type="text" class="form-control" id="tgl_lahir" name="tgl_lahir" readonly require>
                         </div>
-                        <input type="text" id="user_id" name="user_id" style="display:none;">
+                        <input type="text" id="user_id" name="user_id" style="display:none;" require>
                       
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
@@ -205,5 +207,37 @@
         });
     });
 </script>
+
+
+<script>
+    $(document).ready(function() {
+        $('.delete').click(function(e) {
+            e.preventDefault();
+            var healthid = $(this).data('id');
+            var nama = $(this).data('nama');
+
+            Swal.fire({
+                title: 'Hapus Akun',
+                text: "Apakah Anda yakin hapus data health '" + nama + "'?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'green',
+                cancelButtonColor: 'red',
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location = "/hapus-health/" + healthid;
+                    Swal.fire("Data Health berhasil dihapus", {
+                        icon: "success",
+                    });
+                } else {
+                    Swal.fire("Data batal dihapus");
+                }
+            });
+        });
+    });
+</script>
+
 
 @endsection

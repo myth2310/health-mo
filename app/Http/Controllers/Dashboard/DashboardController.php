@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
@@ -82,5 +84,26 @@ class DashboardController extends Controller
         $user->save();
         toast('Profil Berhasil diedit!', 'success');
         return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
+    }
+
+    public function coba(){
+    
+      return view('dashboard.coba');
+    }
+
+    public function fetchData()
+    {
+        $esp8266_ip = 'http://192.168.143.232/';
+        try {
+            $response = Http::get($esp8266_ip);
+
+            if ($response->successful()) {
+                return response()->json($response->json());
+            } else {
+                return response()->json(['BPM' => 'Error', 'SpO2' => 'Error'], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['BPM' => 'Error', 'SpO2' => 'Error'], 500);
+        }
     }
 }

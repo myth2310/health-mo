@@ -10,15 +10,12 @@
                 <h3 class="font-weight-bold mb-0">Selamat Datang, di Health Mo ✋</h3>
                 <p class="mb-0">Tingkatkan kualitas hidup anda dengan cek kesehatan anda sekarang!</p>
             </div>
-            <button type="button" class="btn btn-sm btn-success btn-icon d-flex align-items-center mb-0 ms-md-auto mb-sm-0 mb-2 me-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-                <span class="btn-inner--icon">
-                    <span class="p-1 bg-success rounded-circle d-flex ms-auto me-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" style="width: 15px; height: 15px;">
-                            <path fill="#ffffff" d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm80 256h64c44.2 0 80 35.8 80 80c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16c0-44.2 35.8-80 80-80zm-32-96a64 64 0 1 1 128 0 64 64 0 1 1 -128 0zm256-32H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16zm0 64H496c8.8 0 16 7.2 16 16s-7.2 16-16 16H368c-8.8 0-16-7.2-16-16s7.2-16 16-16z" />
-                        </svg>
-                    </span>
-                </span>
-                <span class="btn-inner--text">Edit Profil</span>
+
+            <button type="button" class="btn btn-success btn-icon d-flex ms-md-auto me-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+            <i class="fa-regular fa-address-card" style="margin-right: 10px;"></i>Edit Profil
+            </button>
+            <button type="button" class="btn btn-primary  btn-icon" data-bs-toggle="modal" data-bs-target="#healthInfoModal">
+                <i class="fa-solid fa-circle-info" style="margin-right: 10px;"></i>Informasi Kesehatan
             </button>
         </div>
     </div>
@@ -42,6 +39,7 @@
                                 <h3 class="font-weight-bold mb-0" style="text-transform: uppercase;">{{$data->nama}}
                                 </h3>
                                 <p class="text-secondary text-sm font-weight-normal">{{$umur}} Tahun</p>
+                                <p class="text-secondary text-sm font-weight-normal mt-2" style="text-transform: capitalize;"><i class="fa-solid fa-notes-medical" style="margin-right: 8px;"></i>{{$data->riwayat_penyakit}}</p>
                             </div>
                             <!-- <button class="btn btn-warning checking"><i class="fa-solid fa-heart-pulse" style="color: #ffffff; margin-right: 8px;"></i>Checking Health</button> -->
                         </div>
@@ -63,7 +61,7 @@
                             <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pb-1 text-sm"><span class="text-secondary"></span> &nbsp;
                                 @if (
                                 ($umur >= 6 && $umur <= 10 && $health->bpm >= 70 && $health->bpm <= 110) || ($umur>= 11 && $umur <= 14 && $health->bpm >= 60 && $health->bpm <= 105) || ($umur>= 15 && $umur <= 19 && $health->bpm >= 60 && $health->bpm <= 100) || ($umur>= 20 && $umur <= 35 && $health->bpm >= 95 && $health->bpm <= 170) || ($umur>= 36 && $umur <= 50 && $health->bpm >= 85 && $health->bpm <= 155) || ($umur>= 51 && $health->bpm >= 80 && $health->bpm <= 130) ) <span class="badge text-bg-success text-white p-2" style="font-size: 10px;">Hasil Normal</span>
-                                                                            @else                                                                         <span class="badge text-bg-danger text-white p-2" style="font-size: 10px;">Hasil Tidak Normal</span>                                                                 @endif
+                                                                            @else <span class="badge text-bg-danger text-white p-2" style="font-size: 10px;">Hasil Tidak Normal</span> @endif
                             </li>
                         </ul>
                         @else
@@ -77,6 +75,36 @@
 </div>
 
 <!-- Modal -->
+ <!-- Modal -->
+ <div class="modal fade" id="healthInfoModal" tabindex="-1" role="dialog" aria-labelledby="healthInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="healthInfoModalLabel"><i class="fa-solid fa-circle-info" style="margin-right: 10px;"></i>Informasi Kesehatan</h5>
+                </div>
+                <div class="modal-body">
+                    <h6>Data Denyut Jantung:</h6>
+                    <ul>
+                        <li>Anak usia 6-10 tahun: 70-110 bpm</li>
+                        <li>Anak usia 11-14 tahun: 60-105 bpm</li>
+                        <li>Anak usia 15 tahun ke atas: 60-100 bpm</li>
+                        <li>Orang dewasa usia 20-35 tahun: 95-170 bpm</li>
+                        <li>Orang dewasa usia 35-50 tahun: 85-155 bpm</li>
+                        <li>Orang dewasa berusia 60 tahun: 80-130 bpm</li>
+                    </ul>
+                    <h6>Saturasi Oksigen:</h6>
+                    <ul>
+                        <li>Saturasi oksigen normal: 95-100%</li>
+                        <li>Saturasi oksigen rendah: Di bawah 95%</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

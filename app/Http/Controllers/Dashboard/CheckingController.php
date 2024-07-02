@@ -27,7 +27,6 @@ class CheckingController extends Controller
         }
     }
 
-
     public function store(Request $request)
     {
 
@@ -43,112 +42,50 @@ class CheckingController extends Controller
             $health->user_id = $request->input('user_id');
             $health->save();
 
-            // Arahkan pengguna ke halaman checking dengan user_id
+
             return redirect()->route('checking', ['user_id' => $request->input('user_id')]);
         }
     }
 
-
     public function getHealthData(Request $request)
     {
-        $userId = $request->query('user_id'); // Mengambil user_id dari query parameter
+        $userId = $request->query('user_id');
         $healthData = Health::where('user_id', $userId)
             ->whereDate('created_at', now()->toDateString())
             ->first();
         return response()->json($healthData);
     }
 
-
-    // public function getHealthData()
-    // {
-    //     $user = Auth::user();
-    //     $healthData = Health::where('user_id', $user->user_id)
-    //         ->whereDate('created_at', now()->toDateString())
-    //         ->first();
-    //     return response()->json($healthData);
-    // }
-
-    public function storeHealthData(Request $request)
+    public function rekomendasi()
     {
-        $request->validate([
-            'bpm' => 'required|numeric',
-            'oksigen' => 'required|numeric',
-        ]);
+        $page = 'Hasil Rekomendasi';
+        return view('dashboard.rekomendasi', compact('page'));
+    }
 
-        $user = Auth::user();
-        $user_id = $request->user_id;
-        $bpm = $request->bpm;
-        $oksigen = $request->oksigen;
+    public function Healthstore(Request $request)
+    {
+        $userId = $request->input('user_id');
+        $bpm = $request->input('bpm');
+        $oksigen = $request->input('oksigen');
 
         $today = now()->toDateString();
-
-        $healthData = Health::where('user_id', $user_id)
+        $healthData = Health::where('user_id', $userId)
             ->whereDate('created_at', $today)
             ->first();
 
         if ($healthData) {
             $healthData->update([
                 'bpm' => $bpm,
-                'oksigen' => $oksigen
+                'oksigen' => $oksigen,
             ]);
         } else {
-            $healthData = new Health();
-            $healthData->user_id = $user_id;
-            $healthData->bpm = $bpm;
-            $healthData->oksigen = $oksigen;
-            $healthData->save();
-        }
-        return response()->json(['message' => 'Data berhasil disimpan atau diperbarui'], 201);
-    }
-
-    public function storeHealthData1(Request $request)
-    {
-        $bpm = $request->bpm;
-        $oksigen = $request->oksigen;
-
-        $today = now()->toDateString();
-
-        $healthData = Coba::whereDate('created_at', $today)
-            ->first();
-
-        if ($healthData) {
-            $healthData->update([
+            $healthData = Health::create([
+                'user_id' => $userId,
                 'bpm' => $bpm,
-                'oksigen' => $oksigen
+                'oksigen' => $oksigen,
             ]);
-        } else {
-            $healthData = new Coba();
-            $healthData->bpm = $bpm;
-            $healthData->oksigen = $oksigen;
-            $healthData->save();
         }
-        return response()->json(['message' => 'Data berhasil disimpan atau diperbarui'], 201);
-    }
 
-    public function storeHealth()
-    {
-        $today = now()->toDateString();
-
-        $healthData = Coba::whereDate('created_at', $today)
-            ->first();
-
-        if ($healthData) {
-            $healthData->update([
-                'bpm' => request()->bpm,
-                'oksigen' => request()->oksigen
-            ]);
-        } else {
-            $healthData = new Coba();
-            $healthData->bpm = request()->bpm;
-            $healthData->oksigen = request()->oksigen;
-            $healthData->save();
-        }
-    }
-
-
-    public function rekomendasi()
-    {
-        $page = 'Hasil Rekomendasi';
-        return view('dashboard.rekomendasi', compact('page'));
+        return response()->json(['message' => 'Data successfully stored', 'data' => $healthData], 200);
     }
 }

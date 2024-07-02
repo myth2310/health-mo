@@ -1,8 +1,13 @@
 @extends('dashboard.layouts.app')
+
 @section('content')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+@php
+    $userId = request()->query('user_id');
+@endphp
 
 <div class="row">
     <div class="col-md">
@@ -27,9 +32,11 @@
 <script>
     $(document).ready(function() {
         function fetchDataAndUpdateRecommendation() {
+            var userId = "{{ $userId }}";
             $.ajax({
                 url: "/health/data",
                 method: "GET",
+                data: { user_id: userId },
                 success: function(response) {
                     var bpmValue = response && response.bpm !== undefined ? response.bpm : 0;
                     var oxygenValue = response && response.oksigen !== undefined ? response.oksigen : 0;
@@ -42,13 +49,10 @@
                     $('.heartRateValue').text("Failed to load data");
                     $('.oxygenValue').text("Failed to load data");
                 },
-                complete: function() {
-                    setTimeout(fetchDataAndUpdateRecommendation, 1000);
-                }
             });
         }
 
-        function showHealthRecommendation(age, bpmValue, oxygenValue) {
+        function showHealthRecommendation(bpmValue, oxygenValue) {
             var recommendation = "";
             var result = "Kondisi Normal";
             if (((bpmValue < 70 || bpmValue > 110)) ||
@@ -64,18 +68,11 @@
                 result = "Hasil deteksi menunjukkan bahwa detak jantung dan kadar oksigen Anda tidak normal.";
             }
 
-
-
             document.getElementById("health-recommendation").innerText = recommendation;
             document.getElementById("health-result").innerText = "Hasil: " + result;
         }
 
-
         fetchDataAndUpdateRecommendation();
     });
 </script>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 @endsection

@@ -13,5 +13,6 @@ class Health extends Model
     protected $fillable = [
         'bpm',
         'oksigen',
+        'created_at',
     ];
 }

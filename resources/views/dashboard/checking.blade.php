@@ -1,18 +1,45 @@
 @extends('dashboard.layouts.app')
 
 @section('content')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+    /* CSS untuk loading spinner */
+    .loader-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .loader {
+        border: 8px solid #f3f3f3; /* Warna garis */
+        border-top: 8px solid #3498db; /* Warna garis yang berputar */
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 2s linear infinite; /* Animasi berputar */
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
 
 @php
-    $userId = request()->query('user_id');
+$userId = request()->query('user_id');
 @endphp
 
-<form action="">
-    <input type="text" value="{{$userId}}">
-    <input type="text" class="heartRateValue" >
-    <input type="text"  class="oxygenValue">
+<div id="loading" class="loader-container" style="display: none;">
+    <div class="loader"></div>
+</div>
+
+<form id="healthDataForm">
+    @csrf
+    <input id="userId" name="user_id" value="{{ $userId }}" type="hidden">
+    <input hidden type="text" class="heartRateValueField" name="bpm" id="heart-rate-input">
+    <input hidden type="text" class="oxygenValueField" name="oksigen" id="spo2-input">
 </form>
+
 <div class="row">
     <div class="col-md-6">
         <div class="card">
@@ -26,7 +53,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6 text-center">
                         <p style="font-weight: bold;">Heart Rate</p>
-                        <h3 class="heartRateValue">Loading...</h3> <!-- Placeholder for BPM value -->
+                        <h3 class="heartRateValue">Loading...</h3>
                     </div>
                 </div>
             </div>
@@ -44,7 +71,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-6 text-center">
                         <p style="font-weight: bold;">Kadar Oksigen</p>
-                        <h3 class="oxygenValue">Loading...</h3> <!-- Placeholder for oxygen value -->
+                        <h3 class="oxygenValue">Loading...</h3>
                     </div>
                 </div>
             </div>
@@ -52,31 +79,37 @@
     </div>
 </div>
 
-<script>
-    
-</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
+        function fetchSensorData() {
+            return $.ajax({
+                url: '/fetch-data',
+                method: 'GET'
+            });
+        }
+
         function fetchDataAndUpdateChart() {
-            $.ajax({
-                url: "/health/data",
-                method: "GET",
-                success: function(response) {
-                    var bpmValue = response && response.bpm !== undefined ? response.bpm : 0;
-                    var oxygenValue = response && response.oksigen !== undefined ? response.oksigen : 0;
-                    $('.heartRateValue').text(bpmValue + " BPM");
-                    $('.oxygenValue').text(oxygenValue + " %");
-                    updateChart(bpmValue, oxygenValue);
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error:", error);
-                    $('.heartRateValue').text("Failed to load data");
-                    $('.oxygenValue').text("Failed to load data");
-                    updateChart(0, 0);
-                },
-                complete: function() {
-                    setTimeout(fetchDataAndUpdateChart, 1000);
-                }
+            fetchSensorData().done(function(data) {
+                var bpmValue = data.BPM;
+                var oxygenValue = data.SpO2;
+
+                $('.heartRateValue').text(bpmValue + " BPM");
+                $('.oxygenValue').text(oxygenValue + " %");
+
+                $('.heartRateValueField').val(bpmValue);
+                $('.oxygenValueField').val(oxygenValue);
+
+                updateChart(bpmValue, oxygenValue);
+            }).fail(function() {
+                console.error("Error fetching data");
+                $('.heartRateValue').text("Failed to load data");
+                $('.oxygenValue').text("Failed to load data");
+
+                $('.heartRateValueField').val(0);
+                $('.oxygenValueField').val(0);
+
+                updateChart(0, 0);
             });
         }
 
@@ -85,6 +118,24 @@
             myBPMChart.update();
             myOxygenChart.data.datasets[0].data = [oxygen, 100 - oxygen];
             myOxygenChart.update();
+        }
+
+        function postFormData() {
+            var formData = $('#healthDataForm').serialize();
+            $.ajax({
+                url: "/store/data",
+                method: "POST",
+                data: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('input[name="_token"]').val()
+                },
+                success: function(response) {
+                    console.log("Data successfully posted", response);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error posting data:", error);
+                }
+            });
         }
 
         var ctxBPM = document.getElementById("bpm-chart").getContext("2d");
@@ -125,11 +176,17 @@
             }
         });
 
-        fetchDataAndUpdateChart();
+        var fetchDataInterval = setInterval(fetchDataAndUpdateChart, 5000);
+        var postDataInterval = setInterval(postFormData, 10000);
 
         setTimeout(function() {
-            window.location.href = "/hasil-rekomendasi";
+            clearInterval(fetchDataInterval);
+            clearInterval(postDataInterval);
+            $('#loading').show(); // Tampilkan loading spinner
+            var userId = $('#userId').val();
+            window.location.href = "/hasil-rekomendasi?user_id=" + userId;
         }, 60000);
     });
 </script>
+
 @endsection

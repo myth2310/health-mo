@@ -55,4 +55,12 @@ class HistoryController extends Controller
 
         return response()->json($user);
     }
+
+    public function hapus($encryptedidHealth){
+        $idhealth = decrypt($encryptedidHealth);
+        $health = Health::findOrFail($idhealth);
+        $health->delete();
+        toast('Data Health berhasil dihapus', 'success');
+        return redirect()->back();
+    }
 }
