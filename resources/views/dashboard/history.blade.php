@@ -19,7 +19,7 @@
                     </div>
                     <div class="ms-auto d-flex">
                         <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="fa-solid fa-heart-pulse" style="margin-right: 10px;"></i>Mulai Checking Kesehatan
+                            <i class="fa-solid fa-heart-pulse" style="margin-right: 10px;"></i>Mulai Checking Kesehatan
                         </button>
                     </div>
                 </div>
@@ -51,11 +51,9 @@
                                         $umur = $tanggal_lahir->diffInYears(Carbon\Carbon::now());
                                         ?>
                                         @if (
-                                        ($umur >= 6 && $umur <= 10 && $data->bpm >= 70 && $data->bpm <= 110) || ($umur>= 11 && $umur <= 14 && $data->bpm >= 60 && $data->bpm <= 105) || ($umur>= 15 && $umur <= 19 && $data->bpm >= 60 && $data->bpm <= 100) || ($umur>= 20 && $umur <= 35 && $data->bpm >= 95 && $data->bpm <= 170) || ($umur>= 36 && $umur <= 50 && $data->bpm >= 85 && $data->bpm <= 155) || ($umur>= 51 && $data->bpm >= 80 && $data->bpm <= 130) && ($data->oksigen >= 95 && $data->oksigen <= 100) ) 
-                                            <span class="badge text-bg-success text-white p-2" style="font-size: 10px;">Hasil Normal</span>
-                                        @else
-                                            <span class="badge text-bg-danger text-white p-2" style="font-size: 10px;">Hasil Tidak Normal</span>
-                                        @endif
+                                        ($umur >= 6 && $data->bpm >= 100 && $data->bpm <= 170) || ($umur>= 1 && $umur <= 12 && $data->bpm >= 80 && $data->bpm <= 120) || ($umur>= 13 && $umur <= 60 && $data->bpm >= 60 && $data->bpm <= 100) || ($data->oksigen >= 90 && $data->oksigen <= 100) ) <span class="badge text-bg-success text-white p-2" style="font-size: 10px;">Hasil Normal</span>
+                                                                @else <span class="badge text-bg-danger text-white p-2" style="font-size: 10px;">Hasil Tidak Normal</span> @endif
+
                                     </td>
                                     <td class="text-sm font-weight-semibold text-dark">
                                         <button class="btn-sm btn-success text-white" data-bs-toggle="modal" data-bs-target="#ModalProfil{{$data->health_id}}">
@@ -88,12 +86,7 @@
                                                         <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pb-1 text-sm">
                                                             <div class="alert alert-primary" style="font-size: 15px; font-family: Arial, Helvetica, sans-serif;" role="alert">
                                                                 @if (
-                                                                ($umur >= 6 && $umur <= 10 && $data->bpm >= 70 && $data->bpm <= 110) || ($umur>= 11 && $umur <= 14 && $data->bpm >= 60 && $data->bpm <= 105) || ($umur>= 15 && $umur <= 19 && $data->bpm >= 60 && $data->bpm <= 100) || ($umur>= 20 && $umur <= 35 && $data->bpm >= 95 && $data->bpm <= 170) || ($umur>= 36 && $umur <= 50 && $data->bpm >= 85 && $data->bpm <= 155) || ($umur>= 51 && $data->bpm >= 80 && $data->bpm <= 130) && ($data->oksigen >= 95 && $data->oksigen <= 100) ) 
-                                                                    Untuk mempertahankan kesehatan yang optimal, teruslah menjaga pola makan seimbang dengan banyak buah, sayur, protein sehat, dan biji-bijian. Tetaplah aktif dengan rutin berolahraga seperti jalan cepat atau berenang selama 150 menit per minggu, serta lakukan latihan kekuatan dua kali seminggu. Jangan lupa untuk tetap terhidrasi dengan baik, batasi konsumsi gula dan garam, serta pastikan Anda mendapatkan istirahat yang cukup setiap malam. Terus pertahankan gaya hidup sehat ini untuk menjaga kesehatan jantung dan paru-paru Anda. 
-                                                                @else 
-                                                                    Segera konsultasikan dengan dokter untuk evaluasi lebih lanjut. Sementara itu, cobalah untuk makan makanan seimbang yang kaya buah, sayur, biji-bijian, dan protein sehat. Batasi asupan garam dan gula. Mulailah dengan olahraga ringan seperti berjalan kaki atau bersepeda selama 20-30 menit, 3-5 kali seminggu, dan tambahkan latihan pernapasan dalam seperti yoga. Pastikan Anda tetap terhidrasi dengan baik dan mendapatkan istirahat yang cukup. Tetap pantau kondisi Anda dan ikuti semua saran medis yang diberikan oleh dokter untuk penanganan lebih lanjut jika dirasa tubuh Anda mengalami gangguan yang berlebih. 
-                                                                @endif 
-                                                            </div>
+                                                                ($umur >= 6 && $data->bpm >= 100 && $data->bpm <= 170) || ($umur>= 1 && $umur <= 12 && $data->bpm >= 80 && $data->bpm <= 120) || ($umur>= 13 && $umur <= 60 && $data->bpm >= 60 && $data->bpm <= 100) || ($data->oksigen >= 90 && $data->oksigen <= 100) ) Untuk mempertahankan kesehatan yang optimal, teruslah menjaga pola makan seimbang dengan banyak buah, sayur, protein sehat, dan biji-bijian. Tetaplah aktif dengan rutin berolahraga seperti jalan cepat atau berenang selama 150 menit per minggu, serta lakukan latihan kekuatan dua kali seminggu. Jangan lupa untuk tetap terhidrasi dengan baik, batasi konsumsi gula dan garam, serta pastikan Anda mendapatkan istirahat yang cukup setiap malam. Terus pertahankan gaya hidup sehat ini untuk menjaga kesehatan jantung dan paru-paru Anda. @else Segera konsultasikan dengan dokter untuk evaluasi lebih lanjut. Sementara itu, cobalah untuk makan makanan seimbang yang kaya buah, sayur, biji-bijian, dan protein sehat. Batasi asupan garam dan gula. Mulailah dengan olahraga ringan seperti berjalan kaki atau bersepeda selama 20-30 menit, 3-5 kali seminggu, dan tambahkan latihan pernapasan dalam seperti yoga. Pastikan Anda tetap terhidrasi dengan baik dan mendapatkan istirahat yang cukup. Tetap pantau kondisi Anda dan ikuti semua saran medis yang diberikan oleh dokter untuk penanganan lebih lanjut jika dirasa tubuh Anda mengalami gangguan yang berlebih. @endif </div>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -129,19 +122,19 @@
                         @csrf
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="nama" name="nama" required>
+                            <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukan Nama" required>
                             <div id="namaList" class="list-group"></div>
                         </div>
                         <div class="mb-3">
                             <label for="no_hp" class="form-label">No HP</label>
-                            <input type="text" class="form-control" id="no_hp" name="no_hp" readonly require>
+                            <input type="text" class="form-control" id="no_hp" name="no_hp" readonly required>
                         </div>
                         <div class="mb-3">
                             <label for="tgl_lahir" class="form-label">Tanggal Lahir</label>
-                            <input type="text" class="form-control" id="tgl_lahir" name="tgl_lahir" readonly require>
+                            <input type="text" class="form-control" id="tgl_lahir" name="tgl_lahir" readonly required>
                         </div>
-                        <input type="text" id="user_id" name="user_id" style="display:none;" require>
-                      
+                        <input type="text" id="user_id" name="user_id" style="display: none;" required>
+
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-warning text-white"><i class="fa-solid fa-heart-pulse" style="color: #ffffff; margin-right: 8px;"></i>Checking Health</button>
@@ -217,7 +210,7 @@
             var nama = $(this).data('nama');
 
             Swal.fire({
-                title: 'Hapus Akun',
+                title: 'Hapus Data History',
                 text: "Apakah Anda yakin hapus data health '" + nama + "'?",
                 icon: 'warning',
                 showCancelButton: true,
@@ -239,5 +232,11 @@
     });
 </script>
 
+<style>
+    .no-click {
+        pointer-events: none;
+        color: #999;
+    }
+</style>
 
 @endsection

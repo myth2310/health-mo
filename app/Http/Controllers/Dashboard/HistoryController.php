@@ -42,12 +42,13 @@ class HistoryController extends Controller
                 $output .= '<a href="#" class="list-group-item list-group-item-action" data-id="' . $user->user_id . '">' . $user->nama . '</a>';
             }
         } else {
-            $output .= '<p class="list-group-item">No results found</p>';
+            $output .= '<p class="list-group-item no-click">No results found</p>';
         }
-
+    
         return response($output);
     }
 
+    
     public function getUserDetails(Request $request)
     {
         $user_id = $request->input('user_id');

@@ -21,7 +21,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="password_confirmation">Konfirmasi Password Baru</label>
-                                    <input type="password" name="password_confirmation" placeholder="Konfirmaso Password Baru Anda" id="password_confirmation" class="form-control" required>
+                                    <input type="password" name="password_confirmation" placeholder="Konfirmasi Password Baru Anda" id="password_confirmation" class="form-control" required>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Ganti Password</button>
                             </form>

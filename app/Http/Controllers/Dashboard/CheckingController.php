@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Health;
 use App\Models\Coba;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -47,14 +48,34 @@ class CheckingController extends Controller
         }
     }
 
+    // public function getHealthData(Request $request)
+    // {
+    //     $userId = $request->query('user_id');
+    //     $healthData = Health::where('user_id', $userId)
+    //         ->whereDate('created_at', now()->toDateString())
+    //         ->first();
+    //     return response()->json($healthData);
+    // }
+
     public function getHealthData(Request $request)
     {
         $userId = $request->query('user_id');
+
+        $user = User::find($userId);
+        $birthDate = $user->birth_date;
+        $age = \Carbon\Carbon::parse($birthDate)->age;
+
         $healthData = Health::where('user_id', $userId)
             ->whereDate('created_at', now()->toDateString())
             ->first();
+
+        if ($healthData) {
+            $healthData->age = $age; 
+        }
+
         return response()->json($healthData);
     }
+
 
     public function rekomendasi()
     {

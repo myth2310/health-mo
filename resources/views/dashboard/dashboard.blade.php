@@ -51,7 +51,7 @@
                         <hr>
                         @if($health)
                         <ul class="list-group pl-3">
-                            <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pt-0 pb-1 text-sm"><span class="text-secondary">Nilai BMI :</span> &nbsp; {{ $health->bpm }} BPM</li>
+                            <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pt-0 pb-1 text-sm"><span class="text-secondary">Nilai BPM :</span> &nbsp; {{ $health->bpm }} BPM</li>
                             <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pt-0 pb-1 text-sm"><span class="text-secondary">Oksigen :</span> &nbsp; {{ $health->oksigen }} %</li>
                             <hr class="mb-0">
                             <?php
@@ -60,7 +60,7 @@
                             ?>
                             <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pb-1 text-sm"><span class="text-secondary"></span> &nbsp;
                                 @if (
-                                ($umur >= 6 && $umur <= 10 && $health->bpm >= 70 && $health->bpm <= 110) || ($umur>= 11 && $umur <= 14 && $health->bpm >= 60 && $health->bpm <= 105) || ($umur>= 15 && $umur <= 19 && $health->bpm >= 60 && $health->bpm <= 100) || ($umur>= 20 && $umur <= 35 && $health->bpm >= 95 && $health->bpm <= 170) || ($umur>= 36 && $umur <= 50 && $health->bpm >= 85 && $health->bpm <= 155) || ($umur>= 51 && $health->bpm >= 80 && $health->bpm <= 130) ) <span class="badge text-bg-success text-white p-2" style="font-size: 10px;">Hasil Normal</span>
+                                ($umur >= 6 && $health->bpm >= 100 && $health->bpm <= 170) || ($umur>= 1 && $umur <= 12 && $health->bpm >= 80 && $health->bpm <= 120) || ($umur>= 13 && $umur <= 60 && $health->bpm >= 60 && $health->bpm <= 100) || ($health->oksigen >= 90 && $health->oksigen <= 100) ) <span class="badge text-bg-success text-white p-2" style="font-size: 10px;">Hasil Normal</span>
                                                                             @else <span class="badge text-bg-danger text-white p-2" style="font-size: 10px;">Hasil Tidak Normal</span> @endif
                             </li>
                         </ul>
@@ -85,18 +85,14 @@
                 <div class="modal-body">
                     <h6>Data Denyut Jantung:</h6>
                     <ul>
-                        <li>Anak usia 6-10 tahun: 70-110 bpm</li>
-                        <li>Anak usia 11-14 tahun: 60-105 bpm</li>
-                        <li>Anak usia 15 tahun ke atas: 60-100 bpm</li>
-                        <li>Orang dewasa usia 20-35 tahun: 95-170 bpm</li>
-                        <li>Orang dewasa usia 35-50 tahun: 85-155 bpm</li>
-                        <li>Orang dewasa berusia 60 tahun: 80-130 bpm</li>
+                        <li>Bayi <  1 tahun : 100-170 kali per menit </li>
+                        <li>Anak usia 1-12 tahun : 80-120 kali per menit.</li>
+                        <li>Remaja - Dewasa : 60-100 kali per menit.</li>
                     </ul>
                     <h6>Saturasi Oksigen:</h6>
-                    <ul>
-                        <li>Saturasi oksigen normal: 95-100%</li>
-                        <li>Saturasi oksigen rendah: Di bawah 95%</li>
-                    </ul>
+                    <p class="mb-0">Saturasi Oksigen Normal pada manusia umumnya :</p>
+                    <p>Berkisar 95% - 100%</p>
+                   
                 </div>
                 <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
