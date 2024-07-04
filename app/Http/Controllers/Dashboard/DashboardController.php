@@ -93,7 +93,7 @@ class DashboardController extends Controller
 
     public function fetchData()
     {
-        $esp8266_ip = 'http://192.168.143.232/';
+        $esp8266_ip = 'http://192.168.244.232/';
         try {
             $response = Http::get($esp8266_ip);
 

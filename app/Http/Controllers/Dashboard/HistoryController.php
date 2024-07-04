@@ -15,6 +15,7 @@ class HistoryController extends Controller
         $page = 'History';
 
         $data = Health::join('users', 'health.user_id', '=', 'users.user_id')
+            ->select('users.*', 'health.*', 'health.created_at as tgl_periksa')
             ->get();
         return view('dashboard.history', compact('page', 'data'));
     }
@@ -25,17 +26,18 @@ class HistoryController extends Controller
 
         $user = Auth::user();
         $data = Health::join('users', 'health.user_id', '=', 'users.user_id')
+            ->select('users.*', 'health.*', 'health.created_at as tgl_periksa')
             ->where('health.user_id', '=', $user->user_id)
             ->get();
 
-        return view('dashboard.history-checking', compact('page','data'));
+        return view('dashboard.history-checking', compact('page', 'data'));
     }
 
     public function searchUser(Request $request)
     {
         $query = $request->input('query');
         $users = User::where('nama', 'LIKE', "%{$query}%")->get(['user_id', 'nama']);
-        
+
         $output = '';
         if ($users->count() > 0) {
             foreach ($users as $user) {
@@ -44,11 +46,11 @@ class HistoryController extends Controller
         } else {
             $output .= '<p class="list-group-item no-click">No results found</p>';
         }
-    
+
         return response($output);
     }
 
-    
+
     public function getUserDetails(Request $request)
     {
         $user_id = $request->input('user_id');
@@ -57,7 +59,8 @@ class HistoryController extends Controller
         return response()->json($user);
     }
 
-    public function hapus($encryptedidHealth){
+    public function hapus($encryptedidHealth)
+    {
         $idhealth = decrypt($encryptedidHealth);
         $health = Health::findOrFail($idhealth);
         $health->delete();

@@ -48,22 +48,15 @@ class CheckingController extends Controller
         }
     }
 
-    // public function getHealthData(Request $request)
-    // {
-    //     $userId = $request->query('user_id');
-    //     $healthData = Health::where('user_id', $userId)
-    //         ->whereDate('created_at', now()->toDateString())
-    //         ->first();
-    //     return response()->json($healthData);
-    // }
-
     public function getHealthData(Request $request)
     {
         $userId = $request->query('user_id');
 
         $user = User::find($userId);
-        $birthDate = $user->birth_date;
-        $age = \Carbon\Carbon::parse($birthDate)->age;
+
+        $tanggal_lahir = \Carbon\Carbon::createFromFormat('Y-m-d', $user->tgl_lahir);
+        $age = $tanggal_lahir->diffInYears(\Carbon\Carbon::now());
+
 
         $healthData = Health::where('user_id', $userId)
             ->whereDate('created_at', now()->toDateString())

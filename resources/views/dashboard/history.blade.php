@@ -42,7 +42,7 @@
                                 @foreach($data as $data)
                                 <tr>
                                     <td><span class="text-sm">{{$data->nama}}</span></td>
-                                    <td><span class="text-sm">{{ Carbon\Carbon::parse($data->create_at)->isoFormat('DD MMMM YYYY') }}</span></td>
+                                    <td> <span class="text-sm">{{ Carbon\Carbon::parse($data->tgl_periksa)->isoFormat('DD MMMM YYYY') }}</span></td>
                                     <td><span class="text-sm">{{$data->bpm}} BPM</span></td>
                                     <td><span class="text-sm">{{$data->oksigen}} %</span></td>
                                     <td>
