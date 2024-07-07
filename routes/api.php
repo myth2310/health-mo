@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Dashboard\CheckingController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\IpEspController;
 use App\Http\Controllers\Dashboard\TryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -20,5 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/health/store', [TryController::class, 'storeHealthData']);
+Route::post('/update-ip-esp', [IpEspController::class, 'update']);
 

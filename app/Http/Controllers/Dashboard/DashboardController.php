@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Health;
+use App\Models\IpEsp;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -92,18 +93,23 @@ class DashboardController extends Controller
     }
 
     public function fetchData()
-    {
-        $esp8266_ip = 'http://192.168.244.232/';
-        try {
-            $response = Http::get($esp8266_ip);
+{
+    try {
+        $ipesp = IpEsp::where('ipesp_id', 1)->first();
 
-            if ($response->successful()) {
-                return response()->json($response->json());
-            } else {
-                return response()->json(['BPM' => 'Error', 'SpO2' => 'Error'], 500);
-            }
-        } catch (\Exception $e) {
-            return response()->json(['BPM' => 'Error', 'SpO2' => 'Error'], 500);
+        if (!$ipesp) {
+            return response()->json(['error' => 'Data IP Esp tidak ditemukan'], 404);
         }
+        $response = Http::get($ipesp->ip_esp);
+
+        if ($response->successful()) {
+            return response()->json($response->json());
+        } else {
+            return response()->json(['error' => 'Gagal mendapatkan data dari Esp'], $response->status());
+        }
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Terjadi kesalahan: ' . $e->getMessage()], 500);
     }
+}
+
 }

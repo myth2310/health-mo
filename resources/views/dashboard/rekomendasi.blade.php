@@ -15,8 +15,8 @@ $userId = request()->query('user_id');
             <div class="card-body">
                 <p style="font-weight: bold;">Hasil Rekomendasi</p>
                 <hr class="mb-4">
-                <p><span class="badge text-bg-success text-white" id="health-result"></span></p>
-                <div class="alert alert-success" role="alert" id="health-recommendation"></div>
+                <p id="health-result"></p>
+                <div class="alert alert-secondary" role="alert" id="health-recommendation"></div>
                 <div class="data-display">
                     <p>Heart Rate: <span class="heartRateValue"></span></p>
                     <p>Oxygen Level: <span class="oxygenValue"></span></p>
@@ -66,23 +66,21 @@ $userId = request()->query('user_id');
             var normalHeartRate = false;
             if ((ageValue < 1 && bpmValue >= 100 && bpmValue <= 170) ||
                 (ageValue >= 1 && ageValue <= 12 && bpmValue >= 80 && bpmValue <= 120) ||
-                (ageValue >= 13 && bpmValue <= 60 && bpmValue <= 100)) {
+                (ageValue >= 13 && bpmValue >= 60 && bpmValue <= 100)) {
                 normalHeartRate = true;
             }
-            var normalOxygenSaturation = (oxygenValue >= 95 && oxygenValue <= 100);
 
-            if (normalHeartRate && normalOxygenSaturation) {
-                recommendation += "Untuk mempertahankan kesehatan yang optimal, teruslah menjaga pola makan seimbang dengan banyak buah, sayur, protein sehat, dan biji-bijian. Tetaplah aktif dengan rutin berolahraga seperti jalan cepat atau berenang selama 150 menit per minggu, serta lakukan latihan kekuatan dua kali seminggu. Jangan lupa untuk tetap terhidrasi dengan baik, batasi konsumsi gula dan garam, serta pastikan Anda mendapatkan istirahat yang cukup setiap malam. Terus pertahankan gaya hidup sehat ini untuk menjaga kesehatan jantung dan paru-paru Anda.";
-                result = "Selamat, hasil deteksi detak jantung dan kadar oksigen Anda normal!";
+            if (normalHeartRate && oxygenValue >= 95 && oxygenValue <= 100) {
+                recommendation = "Untuk mempertahankan kesehatan yang optimal, teruslah menjaga pola makan seimbang dengan banyak buah, sayur, protein sehat, dan biji-bijian. Tetaplah aktif dengan rutin berolahraga seperti jalan cepat atau berenang selama 150 menit per minggu, serta lakukan latihan kekuatan dua kali seminggu. Jangan lupa untuk tetap terhidrasi dengan baik, batasi konsumsi gula dan garam, serta pastikan Anda mendapatkan istirahat yang cukup setiap malam. Terus pertahankan gaya hidup sehat ini untuk menjaga kesehatan jantung dan paru-paru Anda.";
+                result = '<span class="badge text-bg-success text-white">Selamat, hasil deteksi detak jantung dan kadar oksigen Anda normal!</span>';
             } else {
-                recommendation += "Segera konsultasikan dengan dokter untuk evaluasi lebih lanjut. Sementara itu, cobalah untuk makan makanan seimbang yang kaya buah, sayur, biji-bijian, dan protein sehat. Batasi asupan garam dan gula. Mulailah dengan olahraga ringan seperti berjalan kaki atau bersepeda selama 20-30 menit, 3-5 kali seminggu, dan tambahkan latihan pernapasan dalam seperti yoga. Pastikan Anda tetap terhidrasi dengan baik dan mendapatkan istirahat yang cukup. Tetap pantau kondisi Anda dan ikuti semua saran medis yang diberikan oleh dokter. Penanganan lebih lanjut jika dirasa tubuh anda mengalami gangguan yang berlebih.";
-                result = "Hasil deteksi menunjukkan bahwa detak jantung dan kadar oksigen Anda tidak normal.";
+                recommendation = "Segera konsultasikan dengan dokter untuk evaluasi lebih lanjut. Sementara itu, cobalah untuk makan makanan seimbang yang kaya buah, sayur, biji-bijian, dan protein sehat. Batasi asupan garam dan gula. Mulailah dengan olahraga ringan seperti berjalan kaki atau bersepeda selama 20-30 menit, 3-5 kali seminggu, dan tambahkan latihan pernapasan dalam seperti yoga. Pastikan Anda tetap terhidrasi dengan baik dan mendapatkan istirahat yang cukup. Tetap pantau kondisi Anda dan ikuti semua saran medis yang diberikan oleh dokter. Penanganan lebih lanjut jika dirasa tubuh anda mengalami gangguan yang berlebih.";
+                result = '<span class="badge text-bg-danger text-white">Hasil deteksi menunjukkan bahwa detak jantung dan kadar oksigen Anda tidak normal.</span>';
             }
 
-            document.getElementById("health-recommendation").innerText = recommendation;
-            document.getElementById("health-result").innerText = "Hasil: " + result;
+            document.getElementById("health-recommendation").innerHTML = recommendation;
+            document.getElementById("health-result").innerHTML = "Hasil: " + result;
         }
-
 
         fetchDataAndUpdateRecommendation();
     });

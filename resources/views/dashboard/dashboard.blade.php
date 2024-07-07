@@ -8,18 +8,19 @@
         <div class="d-md-flex align-items-center mb-3 mx-2">
             <div class="mb-md-0 mb-3">
                 <h3 class="font-weight-bold mb-0">Selamat Datang, di Health Mo ✋</h3>
-                <p class="mb-0">Tingkatkan kualitas hidup anda dengan cek kesehatan anda sekarang!</p>
+                <p class="mb-0 d-md-block d-none">Tingkatkan kualitas hidup anda dengan cek kesehatan anda sekarang!</p>
             </div>
-
-            <button type="button" class="btn btn-success btn-icon d-flex ms-md-auto me-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
-            <i class="fa-regular fa-address-card" style="margin-right: 10px;"></i>Edit Profil
+            <!-- 
+            <button type="button" class="btn btn-success btn-icon d-flex ms-md-auto me-2 mt-2" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                <i class="fa-regular fa-address-card" style="margin-right: 10px;"></i>Edit Profil
             </button>
-            <button type="button" class="btn btn-primary  btn-icon" data-bs-toggle="modal" data-bs-target="#healthInfoModal">
+            <button type="button" class="btn btn-primary btn-icon mt-2" data-bs-toggle="modal" data-bs-target="#healthInfoModal">
                 <i class="fa-solid fa-circle-info" style="margin-right: 10px;"></i>Informasi Kesehatan
-            </button>
+            </button> -->
         </div>
     </div>
 </div>
+
 <hr class="my-0 mb-4">
 
 <div class="row mt-2 mb-2">
@@ -28,20 +29,30 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col profil-image">
+                        <div class="col-lg-6 col-md-12 col-sm-6 profil-image">
                             <div class="mt-3">
                                 <img style="width: 500px; height: 200px; object-fit: contain; object-position: top;" src="{{ auth()->user()->foto ? asset('storage/' . auth()->user()->foto) : asset('assets/img/icon-profil.png') }}" class="img-fluid" alt="Profile Picture">
                             </div>
-
                         </div>
-                        <div class="col mt-4">
+                        <div class="col-lg-6 col-md-12 col-sm-6 mt-4">
                             <div class="profil" style="font-weight: 700;">
                                 <h3 class="font-weight-bold mb-0" style="text-transform: uppercase;">{{$data->nama}}
                                 </h3>
                                 <p class="text-secondary text-sm font-weight-normal">{{$umur}} Tahun</p>
                                 <p class="text-secondary text-sm font-weight-normal mt-2" style="text-transform: capitalize;"><i class="fa-solid fa-notes-medical" style="margin-right: 8px;"></i>{{$data->riwayat_penyakit}}</p>
+                                <div class="row">
+                                    <div class="col p-0 mx-1">
+                                        <button type="button" class="btn btn-sm btn-primary btn-icon mt-2 w-100" data-bs-toggle="modal" data-bs-target="#editProfileModal">
+                                            Edit Profil
+                                        </button>
+                                    </div>
+                                    <div class="col p-0">
+                                        <button type="button" class="btn btn-sm btn-success btn-icon mt-2 w-100" data-bs-toggle="modal" data-bs-target="#healthInfoModal">
+                                            Informasi
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <!-- <button class="btn btn-warning checking"><i class="fa-solid fa-heart-pulse" style="color: #ffffff; margin-right: 8px;"></i>Checking Health</button> -->
                         </div>
                     </div>
                 </div>
@@ -60,8 +71,8 @@
                             ?>
                             <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pb-1 text-sm"><span class="text-secondary"></span> &nbsp;
                                 @if (
-                                ($umur >= 6 && $health->bpm >= 100 && $health->bpm <= 170) || ($umur>= 1 && $umur <= 12 && $health->bpm >= 80 && $health->bpm <= 120) || ($umur>= 13 && $umur <= 60 && $health->bpm >= 60 && $health->bpm <= 100) || ($health->oksigen >= 90 && $health->oksigen <= 100) ) <span class="badge text-bg-success text-white p-2" style="font-size: 10px;">Hasil Normal</span>
-                                                                            @else <span class="badge text-bg-danger text-white p-2" style="font-size: 10px;">Hasil Tidak Normal</span> @endif
+                                (($umur < 1 && $data->bpm >= 100 && $data->bpm <= 170) || ($umur>= 1 && $umur <= 12 && $data->bpm >= 80 && $data->bpm <= 120) || ($umur>= 13 && $umur <= 60 && $data->bpm >= 60 && $data->bpm <= 100)) && ($data->oksigen >= 95 && $data->oksigen <= 100)) <span class="badge text-bg-success text-white p-2" style="font-size: 10px;">Hasil Normal</span>
+                                                            @else <span class="badge text-bg-danger text-white p-2" style="font-size: 10px;">Hasil Tidak Normal</span> @endif
                             </li>
                         </ul>
                         @else
@@ -75,31 +86,31 @@
 </div>
 
 <!-- Modal -->
- <!-- Modal -->
- <div class="modal fade" id="healthInfoModal" tabindex="-1" role="dialog" aria-labelledby="healthInfoModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="healthInfoModalLabel"><i class="fa-solid fa-circle-info" style="margin-right: 10px;"></i>Informasi Kesehatan</h5>
-                </div>
-                <div class="modal-body">
-                    <h6>Data Denyut Jantung:</h6>
-                    <ul>
-                        <li>Bayi <  1 tahun : 100-170 kali per menit </li>
-                        <li>Anak usia 1-12 tahun : 80-120 kali per menit.</li>
-                        <li>Remaja - Dewasa : 60-100 kali per menit.</li>
-                    </ul>
-                    <h6>Saturasi Oksigen:</h6>
-                    <p class="mb-0">Saturasi Oksigen Normal pada manusia umumnya :</p>
-                    <p>Berkisar 95% - 100%</p>
-                   
-                </div>
-                <div class="modal-footer">
+<!-- Modal -->
+<div class="modal fade" id="healthInfoModal" tabindex="-1" role="dialog" aria-labelledby="healthInfoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="healthInfoModalLabel"><i class="fa-solid fa-circle-info" style="margin-right: 10px;"></i>Informasi Kesehatan</h5>
+            </div>
+            <div class="modal-body">
+                <h6>Data Denyut Jantung:</h6>
+                <ul>
+                    <li>Bayi < 1 tahun : 100-170 kali per menit </li>
+                    <li>Anak usia 1-12 tahun : 80-120 kali per menit.</li>
+                    <li>Remaja - Dewasa : 60-100 kali per menit.</li>
+                </ul>
+                <h6>Saturasi Oksigen:</h6>
+                <p class="mb-0">Saturasi Oksigen Normal pada manusia umumnya :</p>
+                <p>Berkisar 95% - 100%</p>
+
+            </div>
+            <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
     </div>
+</div>
 
 <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -267,6 +278,8 @@
         width: 100%;
         height: 500px;
     }
+
+   
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

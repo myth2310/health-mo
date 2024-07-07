@@ -26,6 +26,28 @@
             </div>
             <div class="card-body px-0 py-0">
                 <div class="container  mb-4">
+                    <p class="pt-4 mb-0 text-bold">Filter Data</p>
+                    <form id="filterForm" action="/export-pdf" method="POST">
+                        @csrf
+                        <div class="row mb-4 p-2">
+                            <div class="col-md-3 p-2">
+                                <input type="text" class="form-control" id="nama_export" name="nama_export" placeholder="Masukan Nama" required>
+                                <div id="namaListExport" class="list-group"></div>
+                            </div>
+                            <div class="col-md-2 p-2">
+                                <input type="text" class="form-control" id="tgl_lahir_export" name="tgl_lahir_export" placeholder="Tanggal Lahir" readonly required>
+
+                            </div>
+                            <div class="col-md-3 p-2">
+                                <input type="text" class="form-control" id="no_hp_export" name="no_hp_export" placeholder="No HP" readonly required>
+                            </div>
+                            <input type="text" id="user_id_export" name="user_id_export" style="display: none;" required>
+
+                            <div class="col p-2">
+                                <button type="submit" class="btn btn-primary export"><i class="fa-solid fa-file-export" style="margin-right: 10px;"></i>Export Data</button>
+                            </div>
+                        </div>
+                    </form>
                     <div class="table-responsive p-0 mt-3">
                         <table id="example" class="table align-items-center mb-0">
                             <thead>
@@ -51,8 +73,10 @@
                                         $umur = $tanggal_lahir->diffInYears(Carbon\Carbon::now());
                                         ?>
                                         @if (
-                                        ($umur >= 6 && $data->bpm >= 100 && $data->bpm <= 170) || ($umur>= 1 && $umur <= 12 && $data->bpm >= 80 && $data->bpm <= 120) || ($umur>= 13 && $umur <= 60 && $data->bpm >= 60 && $data->bpm <= 100) || ($data->oksigen >= 90 && $data->oksigen <= 100) ) <span class="badge text-bg-success text-white p-2" style="font-size: 10px;">Hasil Normal</span>
-                                                                @else <span class="badge text-bg-danger text-white p-2" style="font-size: 10px;">Hasil Tidak Normal</span> @endif
+                                        (($umur < 1 && $data->bpm >= 100 && $data->bpm <= 170) || ($umur>= 1 && $umur <= 12 && $data->bpm >= 80 && $data->bpm <= 120) || ($umur>= 13 && $umur <= 60 && $data->bpm >= 60 && $data->bpm <= 100)) && ($data->oksigen >= 95 && $data->oksigen <= 100) ) <span class="badge text-bg-success text-white p-2" style="font-size: 10px;">Hasil Normal</span>
+                                                                    @else
+                                                                    <span class="badge text-bg-danger text-white p-2" style="font-size: 10px;">Hasil Tidak Normal</span>
+                                                                    @endif
 
                                     </td>
                                     <td class="text-sm font-weight-semibold text-dark">
@@ -84,27 +108,44 @@
                                                         </li>
                                                         <hr class="mb-0">
                                                         <li class="list-group-item border-0 ps-0 text-dark font-weight-semibold pb-1 text-sm">
-                                                            <div class="alert alert-primary" style="font-size: 15px; font-family: Arial, Helvetica, sans-serif;" role="alert">
-                                                                @if (
-                                                                ($umur >= 6 && $data->bpm >= 100 && $data->bpm <= 170) || ($umur>= 1 && $umur <= 12 && $data->bpm >= 80 && $data->bpm <= 120) || ($umur>= 13 && $umur <= 60 && $data->bpm >= 60 && $data->bpm <= 100) || ($data->oksigen >= 90 && $data->oksigen <= 100) ) Untuk mempertahankan kesehatan yang optimal, teruslah menjaga pola makan seimbang dengan banyak buah, sayur, protein sehat, dan biji-bijian. Tetaplah aktif dengan rutin berolahraga seperti jalan cepat atau berenang selama 150 menit per minggu, serta lakukan latihan kekuatan dua kali seminggu. Jangan lupa untuk tetap terhidrasi dengan baik, batasi konsumsi gula dan garam, serta pastikan Anda mendapatkan istirahat yang cukup setiap malam. Terus pertahankan gaya hidup sehat ini untuk menjaga kesehatan jantung dan paru-paru Anda. @else Segera konsultasikan dengan dokter untuk evaluasi lebih lanjut. Sementara itu, cobalah untuk makan makanan seimbang yang kaya buah, sayur, biji-bijian, dan protein sehat. Batasi asupan garam dan gula. Mulailah dengan olahraga ringan seperti berjalan kaki atau bersepeda selama 20-30 menit, 3-5 kali seminggu, dan tambahkan latihan pernapasan dalam seperti yoga. Pastikan Anda tetap terhidrasi dengan baik dan mendapatkan istirahat yang cukup. Tetap pantau kondisi Anda dan ikuti semua saran medis yang diberikan oleh dokter untuk penanganan lebih lanjut jika dirasa tubuh Anda mengalami gangguan yang berlebih. @endif </div>
-                                                        </li>
-                                                    </ul>
+                                                            @if (
+                                                            (($umur < 1 && $data->bpm >= 100 && $data->bpm <= 170) || ($umur>= 1 && $umur <= 12 && $data->bpm >= 80 && $data->bpm <= 120) || ($umur>= 13 && $umur <= 60 && $data->bpm >= 60 && $data->bpm <= 100)) && ($data->oksigen >= 95 && $data->oksigen <= 100) ) <div class="alert alert-primary" style="font-size: 15px; font-family: Arial, Helvetica, sans-serif;" role="alert">
+                                                                                        Untuk mempertahankan kesehatan yang optimal, teruslah menjaga pola makan seimbang dengan banyak buah,
+                                                                                        sayur, protein sehat, dan biji-bijian. Tetaplah aktif dengan rutin berolahraga seperti jalan cepat atau berenang selama 150 menit per minggu,
+                                                                                        serta lakukan latihan kekuatan dua kali seminggu. Jangan lupa untuk tetap terhidrasi dengan baik,
+                                                                                        batasi konsumsi gula dan garam, serta pastikan Anda mendapatkan istirahat yang cukup setiap malam.
+                                                                                        Terus pertahankan gaya hidup sehat ini untuk menjaga kesehatan jantung dan paru-paru Anda.
                                                 </div>
+                                                @else
+                                                <div class="alert alert-danger" style="font-size: 15px; font-family: Arial, Helvetica, sans-serif;" role="alert">
+                                                    Segera konsultasikan dengan dokter untuk evaluasi lebih lanjut.
+                                                    Sementara itu, cobalah untuk makan makanan seimbang yang kaya buah, sayur,
+                                                    biji-bijian, dan protein sehat. Batasi asupan garam dan gula.
+                                                    Mulailah dengan olahraga ringan seperti berjalan kaki atau bersepeda selama 20-30 menit,
+                                                    3-5 kali seminggu, dan tambahkan latihan pernapasan dalam seperti yoga.
+                                                    Pastikan Anda tetap terhidrasi dengan baik dan mendapatkan istirahat yang cukup.
+                                                    Tetap pantau kondisi Anda dan ikuti semua saran medis yang diberikan oleh dokter untuk penanganan lebih lanjut jika dirasa tubuh Anda mengalami gangguan yang berlebih.
+                                                </div>
+                                                @endif
+
+                                                </li>
+                                                </ul>
                                             </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
-                                @endforeach
-                            </tbody>
-                        </table>
                     </div>
+                    @endforeach
+                    </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -157,6 +198,7 @@
 
 <script>
     $(document).ready(function() {
+        // Event handler untuk form hidden
         $('#nama').on('input', function() {
             let query = $(this).val();
             if (query.length > 2) {
@@ -176,7 +218,7 @@
             }
         });
 
-        $(document).on('click', '.list-group-item', function() {
+        $('#hiddenForm').on('click', '.list-group-item', function() {
             let user_id = $(this).data('id');
             $('#user_id').val(user_id);
             $('#nama').val($(this).text());
@@ -192,6 +234,49 @@
                 success: function(data) {
                     $('#no_hp').val(data.no_hp);
                     $('#tgl_lahir').val(data.tgl_lahir);
+                },
+                error: function(xhr, status, error) {
+                    console.error("An error occurred: " + error);
+                }
+            });
+        });
+
+        // Event handler untuk form filter
+        $('#nama_export').on('input', function() {
+            let query1 = $(this).val();
+            if (query1.length > 2) {
+                $.ajax({
+                    url: '{{ url("/search-user-export") }}',
+                    method: 'POST',
+                    data: {
+                        query: query1,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(data) {
+                        $('#namaListExport').html(data);
+                    }
+                });
+            } else {
+                $('#namaListExport').html('');
+            }
+        });
+
+        $('#filterForm').on('click', '.list-group-item', function() {
+            let user_id = $(this).data('id');
+            $('#user_id_export').val(user_id);
+            $('#nama_export').val($(this).text());
+            $('#namaListExport').html('');
+
+            $.ajax({
+                url: '{{ url("/get-user-export") }}',
+                method: 'POST',
+                data: {
+                    user_id: user_id,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(data) {
+                    $('#no_hp_export').val(data.no_hp);
+                    $('#tgl_lahir_export').val(data.tgl_lahir);
                 },
                 error: function(xhr, status, error) {
                     console.error("An error occurred: " + error);

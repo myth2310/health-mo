@@ -22,6 +22,11 @@ class DatabaseSeeder extends Seeder
             'status' => 1,
             'password' => bcrypt('admin'),
 
+
+        ]);
+        
+        DB::table('ip_esps')->insert([
+            'ip_esp' => 'http://192.168.244.232/',
         ]);
     }
 }

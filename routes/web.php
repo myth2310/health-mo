@@ -36,6 +36,12 @@ Route::group(['middleware' => ['auth', 'ceklevel:Admin']], function () {
     Route::get('/history', [HistoryController::class, 'index'])->name('admin.history');
     Route::post('/search-user', [HistoryController::class, 'searchUser']);
     Route::post('/get-user-details', [HistoryController::class, 'getUserDetails']);
+
+    Route::post('/search-user-export', [HistoryController::class, 'searchUserExport']);
+    Route::post('/get-user-export', [HistoryController::class, 'getUserExport']);
+    
+    Route::post('/export-pdf', [HistoryController::class, 'exportPDF'])->name('export.pdf');
+
     Route::get('/hapus-health/{id}', [HistoryController::class, 'hapus']);
     Route::post('/insert-health-data', [CheckingController::class, 'store']);
     Route::get('/health/data', [CheckingController::class, 'getHealthData']);
@@ -46,10 +52,7 @@ Route::group(['middleware' => ['auth', 'ceklevel:User']], function () {
     Route::get('/history-checking', [HistoryController::class, 'history'])->name('user.history');
 });
 
-Route::get('/try-view', [TryController::class, 'index']);
-Route::post('/start-data-collection', [TryController::class, 'startDataCollection']);
-Route::post('/post-data', [TryController::class, 'storeHealthData']);
-Route::get('/get-data/{userId}', [TryController::class, 'getHealthData']);
+
 
 
 
