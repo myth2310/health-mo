@@ -7,7 +7,7 @@
     <div class="col-md-12">
         <div class="d-md-flex align-items-center mb-3 mx-2">
             <div class="mb-md-0 mb-3">
-                <h3 class="font-weight-bold mb-0">Selamat Datang, di Health Mo ✋</h3>
+                <h3 class="font-weight-bold mb-0 text-welcome">Selamat Datang, di Health Mo ✋</h3>
                 <p class="mb-0 d-md-block d-none">Tingkatkan kualitas hidup anda dengan cek kesehatan anda sekarang!</p>
             </div>
             <!-- 
@@ -85,7 +85,6 @@
     </div>
 </div>
 
-<!-- Modal -->
 <!-- Modal -->
 <div class="modal fade" id="healthInfoModal" tabindex="-1" role="dialog" aria-labelledby="healthInfoModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -279,7 +278,11 @@
         height: 500px;
     }
 
-   
+    @media (max-width: 768px) {
+    .text-welcome{
+     font-size: 18px;   
+    }
+}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

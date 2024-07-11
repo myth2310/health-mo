@@ -8,16 +8,14 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
       
-        h1 {
-            color: #007bff;
-        }
+      
         .card {
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
         }
         .card-title {
-            color: #28a745;
+           
             font-weight: bold;
         }
         .table th {
@@ -40,14 +38,16 @@
 
 <body>
 
-    <h1 class="text-center mb-4">Health Records</h1>
+    <h3 class="text-center mb-4">Health Records</h3>
 
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="card-title">Personal Information</h5>
+            <hr>
             <p><strong>Nama : </strong>{{$data->nama}}</p>
             <p><strong>Tanggal Lahir : </strong>{{ Carbon\Carbon::parse($data->tgl_lahir)->isoFormat('DD MMMM YYYY') }}</p>
             <p><strong>Umur : </strong> {{$umur}} Tahun</p>
+            <p><strong>No HP : </strong>{{$data->no_hp}}</p>
         </div>
     </div>
 
@@ -86,6 +86,7 @@
             </table>
         </div>
     </div>
+    <p class="mt-0" style="font-size: 13px;">Health Mo - health-mo.my.id</p>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

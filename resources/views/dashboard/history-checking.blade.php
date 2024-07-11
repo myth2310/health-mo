@@ -22,17 +22,24 @@
                     <div class="table-responsive p-0 mt-3">
                         <table id="example" class="table align-items-center mb-0">
                             <thead>
-                                <tr>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Tanggal Checking</th>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Nilai BPM</th>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Oksigen</th>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Hasil</th>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2"></th>
+                            <tr class="text-center" style="font-weight: bold; font-size: 13px;">
+                                    <th class="ps-2">#</th>
+                                    <th class="ps-2">Tanggal Checking</th>
+                                    <th class="ps-2">Nilai BPM</th>
+                                    <th class="ps-2">Oksigen</th>
+                                    <th class="ps-2">Hasil</th>
+                                    <th class="ps-2"></th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php
+                                    $no = 1;
+                                ?>
                                 @foreach($data as $data)
                                 <tr>
+                                    <td>
+                                        <span class="text-sm" style="text-align: center;">{{$no++}}</span>
+                                    </td>
                                     <td>
                                         <span class="text-sm">{{ Carbon\Carbon::parse($data->tgl_periksa)->isoFormat('DD MMMM YYYY') }}</span>
                                     </td>

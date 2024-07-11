@@ -23,17 +23,24 @@
                     <div class="table-responsive p-0 mt-3">
                         <table id="example" class="table align-items-center mb-0">
                             <thead>
-                                <tr>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Nama</th>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Status</th>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Email</th>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">No HP</th>
-                                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2"></th>
+                                <tr class="text-center" style="font-weight: bold; font-size: 12px;">
+                                    <th class="ps-2">#</th>
+                                    <th class="ps-2">Nama</th>
+                                    <th class="ps-2">Status</th>
+                                    <th class="ps-2">Email</th>
+                                    <th class="ps-2">No HP</th>
+                                    <th class="ps-2"></th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php
+                                    $no = 1;
+                                ?>
                                 @foreach($user as $data)
                                 <tr>
+                                    <td>
+                                        <span class="text-sm">{{$no++}}</span>
+                                    </td>
                                     <td>
                                         <span class="text-sm" style="text-transform: capitalize;">{{$data->nama}}</span>
                                     </td>
