@@ -22,6 +22,17 @@ $userId = request()->query('user_id');
                     <p>Oxygen Level: <span class="oxygenValue"></span></p>
                     <p>Age: <span class="ageValue"></span></p>
                 </div>
+                <h6>Detail Informasi</h6>
+                <h7>Data Denyut Jantung:</h7>
+                <ul>
+                    <li>Bayi < 1 tahun : 100-170 kali per menit </li>
+                    <li>Anak usia 1-12 tahun : 80-120 kali per menit.</li>
+                    <li>Remaja - Dewasa : 60-100 kali per menit.</li>
+                </ul>
+                <h7>Saturasi Oksigen:</h7>
+                <p class="mb-0">Saturasi Oksigen Normal pada manusia umumnya :</p>
+                <p>Berkisar 95% - 100%</p>
+
                 <div class="justify-content-end mt-3">
                     <a href="/history" class="btn btn-danger">Keluar<i class="fa-solid fa-arrow-right" style="margin-left: 8px;"></i></a>
                 </div>
